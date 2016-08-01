@@ -11,11 +11,12 @@ module.exports = app => {
   const viewPaths = app.config.view.loadpath.split(',');
   coreLogger.info('[egg:plugin:view] loading templates from %j', viewPaths);
 
-  // 配置 nunjucks 的 env 实例
-  app.viewEngine = new nunjucks.Environment(getFileLoader(), {
+  const options = Object.assign({
     noCache: app.config.view.cache !== true,
-    logger: coreLogger,
-  });
+  }, app.config.view);
+
+  // 配置 nunjucks 的 env 实例
+  app.viewEngine = new nunjucks.Environment(getFileLoader(options), options);
 
   /**
    * 暴露 nunjucks 方便自定义 tag 调用
@@ -34,9 +35,9 @@ module.exports = app => {
   loadFilter();
 
   // 获取安全的 fileloader
-  function getFileLoader() {
+  function getFileLoader(options) {
     // 安全的加载模板文件, 会主动注入 csrf 和 nonce
-    const fileLoader = new nunjucks.FileSystemLoader(viewPaths);
+    const fileLoader = new nunjucks.FileSystemLoader(viewPaths, options);
     const originFn = fileLoader.getSource;
     fileLoader.getSource = name => {
       const result = originFn.call(fileLoader, name);

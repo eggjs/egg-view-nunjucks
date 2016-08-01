@@ -26,10 +26,13 @@ module.exports = {
     return this[VIEW_ENGINE];
   },
 
-  // view helper
+  /**
+   * view helper
+   * @member {Object} Application#ViewHelper
+   */
   get ViewHelper() {
     if (!this[VIEW_HELPER]) {
-      this[VIEW_HELPER] = helper(this);
+      this[VIEW_HELPER] = helper(this, this.viewEngine.filters);
     }
     return this[VIEW_HELPER];
   },

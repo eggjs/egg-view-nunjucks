@@ -20,21 +20,59 @@
 [download-image]: https://img.shields.io/npm/dm/egg-view-nunjucks.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-view-nunjucks
 
-<!--
-Description here.
--->
+egg view plugin for [nunjucks](http://mozilla.github.io/nunjucks/).
 
 ## Install
 
 ```bash
-$ npm i egg-view-nunjucks
+$ npm i egg-view-nunjucks --save
 ```
 
 ## Usage
 
-<!--
-Usage, configuration and example here.
--->
+```javascript
+// {app_root}/config/plugin.js
+exports.view = {
+  package: 'egg-view-nunjucks',
+};
+
+// {app_root}/app/controller/test.js
+exports.list = function* () {
+  // this.body = yield this.renderString('{{ name }}', { name: 'local' });
+  // not need to assign this.render to this.body
+  yield this.render('test.tpl', { name: 'view test' });
+};
+```
+
+## Feature
+
+### Filter
+
+Add your filters to `app/extend/filter.js`, then it will auto inject to nunjucks
+```javascript
+// {app_root}/app/extend/filter.js
+exports.hello = name => `hi, ${name}`;
+```
+
+### Security
+
+see [egg-security](https://github.com/eggjs/egg-security)
+
+- auto inject `_csrf` attr to form field
+- auto inject `nonce` attr to script tag
+
+### Helper / locals
+
+- can use `helper/ctx/request` in template, such as `{{ helper.shtml('<div></div>') }}`
+- nunjucks build-in filters is inject to helper, such as `{{ helper.upper('test') }}`
+- `helper.shtml/surl/sjs` is auto wrap with `safe`
+
+### Others
+
+- `app.viewEngine` - nunjucks environment
+- `app.viewEngine.nunjucks` - nunjucks
+- `app.viewEngine.cleanCache(fullPath/tplName)` to easy clean cache, can use with custom [egg-watcher](https://github.com/eggjs/egg-watcher)
+
 
 ## Questions & Suggestions
 

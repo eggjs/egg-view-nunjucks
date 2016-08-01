@@ -2,17 +2,17 @@
 
 const path = require('path');
 
-module.exports = function(antx) {
+module.exports = function(appInfo) {
   const exports = {};
 
   /**
    * View options
    * @member Config#view
-   * @property {String} loadpath - 应用完整模板文件加载路径顺序
-   * @property {Boolean} cache - 是否缓存模板, 本地开发为 false
+   * @property {String} loadpath - full path of template, default to `app/views`, support multi with comma
+   * @property {Boolean} cache - whether cache template, default to true but false at local env.
    */
   exports.view = {
-    loadpath: path.join(antx.baseDir, 'app/views'),
+    loadpath: path.join(appInfo.baseDir, 'app/views'),
     cache: true,
   };
 

@@ -1,9 +1,9 @@
 'use strict';
 
 const request = require('supertest');
-const expect = require('chai').expect;
 const fs = require('fs');
 const path = require('path');
+const expect = require('chai').expect;
 const mm = require('egg-mock');
 
 describe('test/view/cache.test.js', () => {
@@ -23,7 +23,7 @@ describe('test/view/cache.test.js', () => {
       mm(process.env, 'EGG_SERVER_ENV', 'prod');
 
       app = mm.app({
-        baseDir: 'cache/default',
+        baseDir: 'cache/prod',
         plugin: true,
       });
 
@@ -35,6 +35,7 @@ describe('test/view/cache.test.js', () => {
 
     afterEach(() => {
       fs.writeFileSync(templateFilePath, templateContent);
+      app.viewEngine.cleanCache();
     });
 
     it('use cache', function* () {
@@ -47,6 +48,57 @@ describe('test/view/cache.test.js', () => {
       yield request(app.callback())
         .get('/')
         .expect(200, /hi, egg/);
+    });
+
+    it('clean cache', function* () {
+      yield request(app.callback())
+        .get('/')
+        .expect(200, /hi, egg/);
+
+      yield request(app.callback())
+        .get('/sub')
+        .expect(200, /hi, sub egg/);
+
+      fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
+
+      const count = app.viewEngine.cleanCache();
+      expect(count).to.eql(2);
+
+      yield request(app.callback())
+        .get('/')
+        .expect(200, /TEMPLATE CHANGED/);
+    });
+
+    it('clean cache by name', function* () {
+      yield request(app.callback())
+        .get('/')
+        .expect(200, /hi, egg/);
+
+      fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
+
+      const count = app.viewEngine.cleanCache('home.tpl');
+
+      expect(count).to.eql(1);
+
+      yield request(app.callback())
+        .get('/')
+        .expect(200, /TEMPLATE CHANGED/);
+    });
+
+    it('clean cache by path', function* () {
+      yield request(app.callback())
+        .get('/')
+        .expect(200, /hi, egg/);
+
+      fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
+
+      const count = app.viewEngine.cleanCache(templateFilePath);
+
+      expect(count).to.eql(1);
+
+      yield request(app.callback())
+        .get('/')
+        .expect(200, /TEMPLATE CHANGED/);
     });
   });
 

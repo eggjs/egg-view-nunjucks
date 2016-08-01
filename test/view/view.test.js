@@ -19,23 +19,23 @@ describe('test/view/view.test.js', () => {
 
   it('should render string', function* () {
     yield request(app.callback())
-    .get('/string')
-    .expect(200)
-    .expect(/hi, egg/);
+      .get('/string')
+      .expect(200)
+      .expect(/hi, egg/);
   });
 
   it('should render template', function* () {
     yield request(app.callback())
-    .get('/')
-    .expect(200)
-    .expect(/hi, egg/);
+      .get('/')
+      .expect(200)
+      .expect(/hi, egg/);
   });
 
   it('should render template not found', function* () {
     yield request(app.callback())
-    .get('/not_found')
-    .expect(500)
-    .expect(/template not found/);
+      .get('/not_found')
+      .expect(500)
+      .expect(/template not found/);
   });
 
   it('should render error', function* () {
@@ -57,16 +57,16 @@ describe('test/view/view.test.js', () => {
 
   it('should load filter.js', function* () {
     yield request(app.callback())
-    .get('/filter')
-    .expect(200)
-    .expect(/hi, egg/);
+      .get('/filter')
+      .expect(200)
+      .expect(/hi, egg/);
   });
 
   it('should extend locals', function* () {
     yield request(app.callback())
-    .get('/locals')
-    .expect(200)
-    .expect(/app, ctx, locals/);
+      .get('/locals')
+      .expect(200)
+      .expect(/app, ctx, locals/);
   });
 
   describe('view disable', () => {

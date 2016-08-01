@@ -10,7 +10,6 @@ describe('test/view/view.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'example',
-      plugin: true,
     });
     yield app.ready();
   });
@@ -73,7 +72,6 @@ describe('test/view/view.test.js', () => {
     it('should disable view, cms, locals', function* () {
       const app = mm.app({
         baseDir: 'view-disabled',
-        plugin: true,
       });
       expect(app.viewEngine).to.be.undefined;
       yield request(app.callback())

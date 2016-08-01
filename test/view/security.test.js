@@ -12,7 +12,6 @@ describe('test/view/security.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'security',
-      plugin: true,
     });
     yield app.ready();
   });

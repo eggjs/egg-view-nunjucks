@@ -24,7 +24,6 @@ describe('test/view/cache.test.js', () => {
 
       app = mm.app({
         baseDir: 'cache/prod',
-        plugin: true,
       });
 
       yield app.ready();
@@ -112,7 +111,6 @@ describe('test/view/cache.test.js', () => {
 
       app = mm.app({
         baseDir: 'cache/local',
-        plugin: true,
       });
       yield app.ready();
 

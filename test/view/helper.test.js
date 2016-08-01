@@ -12,7 +12,6 @@ describe('test/view/helper.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'view-helper',
-      plugin: true,
     });
     ctx = app.mockContext();
     yield app.ready();

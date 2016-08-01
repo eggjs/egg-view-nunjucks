@@ -52,6 +52,11 @@ Add your filters to `app/extend/filter.js`, then it will auto inject to nunjucks
 ```javascript
 // {app_root}/app/extend/filter.js
 exports.hello = name => `hi, ${name}`;
+
+// {app_root}/app/controller/test.js
+exports.list = function* () {
+  this.body = yield this.renderString('{{ name | hello }}', { name: 'egg' });
+};
 ```
 
 ### Security
@@ -63,11 +68,11 @@ see [egg-security](https://github.com/eggjs/egg-security)
 
 ### Helper / locals
 
-- can use `helper/ctx/request` in template, such as `{{ helper.shtml('<div></div>') }}`
-- nunjucks build-in filters is inject to helper, such as `{{ helper.upper('test') }}`
-- `helper.shtml/surl/sjs` is auto wrap with `safe`
+- you can use `helper/ctx/request` in template, such as `{{ helper.shtml('<div></div>') }}`
+- nunjucks build-in filters is injected to helper, such as `{{ helper.upper('test') }}`
+- `helper.shtml/surl/sjs` is auto wrapped with `safe`
 
-### Others
+### More
 
 - `app.viewEngine` - nunjucks environment
 - `app.viewEngine.nunjucks` - nunjucks

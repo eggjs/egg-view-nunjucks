@@ -44,6 +44,15 @@ exports.list = function* () {
 };
 ```
 
+## Configuration
+```javascript
+// {app_root}/config/config.default.js
+exports.view = {
+  dir: 'path/to/template/dir',  // default to `{app_root}/app/views`
+  cache: true,                  // local env is false
+};
+```
+
 ## Feature
 
 ### Filter

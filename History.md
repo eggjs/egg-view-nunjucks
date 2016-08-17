@@ -1,4 +1,9 @@
 
+0.2.0 / 2016-08-17
+==================
+
+  * feat: [BREAKING_CHANGE] use loader.getLoadUnits from egg-core (#2)
+
 0.1.0 / 2016-08-03
 ==================
   * init project

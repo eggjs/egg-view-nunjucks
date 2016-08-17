@@ -13,8 +13,8 @@ describe('test/view/helper.test.js', () => {
     app = mm.app({
       baseDir: 'view-helper',
     });
-    ctx = app.mockContext();
     yield app.ready();
+    ctx = app.mockContext();
     helper = ctx.view.helper;
   });
 

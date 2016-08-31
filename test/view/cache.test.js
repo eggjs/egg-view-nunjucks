@@ -28,7 +28,7 @@ describe('test/view/cache.test.js', () => {
 
       yield app.ready();
 
-      templateFilePath = path.join(app.config.baseDir, 'app/views/home.tpl');
+      templateFilePath = path.join(app.config.baseDir, 'app/view/home.tpl');
       templateContent = fs.readFileSync(templateFilePath, { encoding: 'utf-8' });
     });
 
@@ -114,7 +114,7 @@ describe('test/view/cache.test.js', () => {
       });
       yield app.ready();
 
-      templateFilePath = path.join(app.config.baseDir, 'app/views/home.tpl');
+      templateFilePath = path.join(app.config.baseDir, 'app/view/home.tpl');
       templateContent = fs.readFileSync(templateFilePath, { encoding: 'utf-8' });
     });
 

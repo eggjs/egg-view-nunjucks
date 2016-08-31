@@ -8,7 +8,7 @@ module.exports = function(appInfo) {
   /**
    * View options
    * @member Config#view
-   * @property {String/Array} dir - full path of template dir, defaults to `{app_root}/app/view`.
+   * @property {String} dir - full path of template dir, support multiple path by using comma, defaults to `{app_root}/app/view`.
    * @property {Boolean} cache - whether cache template, default to true except false at local env.
    */
   exports.view = {

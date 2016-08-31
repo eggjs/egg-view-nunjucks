@@ -81,4 +81,14 @@ describe('test/view/view.test.js', () => {
         .expect(500);
     });
   });
+
+  describe('multi-dir', () => {
+    it('should support multi-dir config', function* () {
+      const app = mm.app({
+        baseDir: 'multi-dir',
+      });
+      yield request(app.callback()).get('/view').expect(200, 'hi, egg');
+      yield request(app.callback()).get('/ext').expect(200, 'hi, ext egg');
+    });
+  });
 });

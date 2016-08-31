@@ -48,7 +48,7 @@ exports.list = function* () {
 ```javascript
 // {app_root}/config/config.default.js
 exports.view = {
-  dir: 'path/to/template/dir',  // default to `{app_root}/app/views`
+  dir: 'path/to/template/dir',  // default to `{app_root}/app/view`
   cache: true,                  // local env is false
 };
 ```

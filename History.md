@@ -1,4 +1,10 @@
 
+0.3.0 / 2016-08-31
+==================
+
+  * feat: [BREAKING_CHANGE] app/views -> app/view (#3)
+  * feat: [BREAKING_CHANGE] config.view.dir support multiple with comma (#3)
+
 0.2.0 / 2016-08-17
 ==================
 

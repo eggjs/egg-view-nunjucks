@@ -42,7 +42,11 @@ describe('test/view/helper.test.js', () => {
       .expect(stripIndent`
         <safe>
         &lt;escape2&gt;
+        <helper-safe>
+        &lt;helper&gt;
         &lt;helper-escape&gt;
+        &lt;helper-escape&gt;
+        &lt;helper2&gt;
       `);
   });
 

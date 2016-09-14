@@ -18,6 +18,27 @@ describe('test/view/security.test.js', () => {
 
   afterEach(mm.restore);
 
+  it('should escape', function* () {
+    // - https://snyk.io/vuln/npm:nunjucks:20160906
+    // - https://github.com/mozilla/nunjucks/issues/835
+    yield request(app.callback())
+      .get('/escape')
+      .expect(200)
+      .expect(stripIndent`
+        &lt;html&gt;
+        &lt;p&gt;arr&lt;/p&gt;
+        &lt;p&gt;obj&lt;/p&gt;
+        --
+        <html>
+        <p>arr</p>
+        <p>obj</p>
+        --
+        <html>
+        <p>arr</p>
+        <p>obj</p>
+      `);
+  });
+
   it('should render xss', function* () {
     yield request(app.callback())
       .get('/xss')

@@ -16,7 +16,7 @@
     "nunjucks"
   ],
   "dependencies": {
-    "nunjucks": "^2.5.1"
+    "nunjucks": "^2.5.2"
   },
   "devDependencies": {
     "autod": "^2.7.1",

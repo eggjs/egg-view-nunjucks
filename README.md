@@ -70,8 +70,6 @@ exports.list = function* () {
 };
 ```
 
-
-
 ### Security
 
 see [egg-security](https://github.com/eggjs/egg-security)
@@ -90,7 +88,6 @@ see [egg-security](https://github.com/eggjs/egg-security)
 - `app.viewEngine` - nunjucks environment
 - `app.viewEngine.nunjucks` - nunjucks
 - `app.viewEngine.cleanCache(fullPath/tplName)` to easy clean cache, can use with custom [egg-watcher](https://github.com/eggjs/egg-watcher)
-
 
 ## Questions & Suggestions
 

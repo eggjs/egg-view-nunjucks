@@ -66,21 +66,21 @@ describe('test/view/helper.test.js', () => {
 
     it('should work .safe', function() {
       const html = '<div>foo</div>';
-      expect(helper.safe(html).val).to.eql(html);
+      expect(helper.safe(html).toString()).to.eql(html);
     });
 
     it('should work .escape', function() {
-      expect(helper.escape('<div>foo</div>').val).to.eql('&lt;div&gt;foo&lt;/div&gt;');
+      expect(helper.escape('<div>foo</div>').toString()).to.eql('&lt;div&gt;foo&lt;/div&gt;');
     });
 
     it('should work safe & escape', function() {
       const out = helper.safe('<div>' + helper.escape('<span>') + '</div>');
-      expect(out.val).to.eql('<div>&lt;span&gt;</div>');
+      expect(out.toString()).to.eql('<div>&lt;span&gt;</div>');
     });
 
     it('should work .csrfTag', function() {
       mm(ctx, 'csrf', 'foobar');
-      expect(helper.csrfTag().val).to.eql('<input type="hidden" name="_csrf" value="foobar" />');
+      expect(helper.csrfTag().toString()).to.eql('<input type="hidden" name="_csrf" value="foobar" />');
     });
   });
 });

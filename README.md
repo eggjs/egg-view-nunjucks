@@ -57,7 +57,7 @@ exports.view = {
 
 ### Filter
 
-- `escape` filter is replaced by `app.helper.escape` provided by `egg-security` for better performance
+- `escape` filter is replaced by `helper.escape` which is provided by `egg-security` for better performance
 - Add your filters to `app/extend/filter.js`, then they will be injected automatically to nunjucks
 
 ```javascript

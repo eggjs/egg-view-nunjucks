@@ -3,6 +3,8 @@
 const request = require('supertest');
 const expect = require('chai').expect;
 const mm = require('egg-mock');
+const stripIndent = require('common-tags').stripIndent;
+
 
 describe('test/view/helper.test.js', () => {
   let app;
@@ -24,13 +26,24 @@ describe('test/view/helper.test.js', () => {
     yield request(app.callback())
       .get('/helper')
       .expect(200)
-      .expect(
-        'value: bar\n' +
-        'value: undefined\n' +
-        'value: bar\n' +
-        'value: bar\n' +
-        '/nunjucks_filters\n'
-      );
+      .expect(stripIndent`
+        value: bar
+        value: undefined
+        value: bar
+        value: bar
+        /nunjucks_filters
+      `);
+  });
+
+  it('should use override escape', function* () {
+    yield request(app.callback())
+      .get('/escape')
+      .expect(200)
+      .expect(stripIndent`
+        <safe>
+        &lt;escape2&gt;
+        &lt;helper-escape&gt;
+      `);
   });
 
   it('should only export to view helper', function* () {
@@ -53,7 +66,7 @@ describe('test/view/helper.test.js', () => {
     });
 
     it('should work .escape', function() {
-      expect(helper.escape('<div>foo</div>')).to.eql('&lt;div&gt;foo&lt;/div&gt;');
+      expect(helper.escape('<div>foo</div>').val).to.eql('&lt;div&gt;foo&lt;/div&gt;');
     });
 
     it('should work safe & escape', function() {

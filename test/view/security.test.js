@@ -3,7 +3,7 @@
 const request = require('supertest');
 const mm = require('egg-mock');
 const cheerio = require('cheerio');
-const expect = require('chai').expect;
+const assert = require('power-assert');
 const stripIndent = require('common-tags').stripIndent;
 
 describe('test/view/security.test.js', () => {
@@ -71,12 +71,12 @@ describe('test/view/security.test.js', () => {
       .expect(200);
 
     const $ = cheerio.load(result.text);
-    expect($('#form1 input').length).to.equal(2);
-    expect($('#form1 [name=_csrf]').attr('name')).to.equal('_csrf');
-    expect($('#form1 [name=_csrf]').val().length).to.above(1);
-    expect($('#form2 input').length).to.equal(1);
-    expect($('#form2 input').attr('data-a')).to.equal('a');
-    expect($('#form2 input').val().length).to.above(1);
+    assert($('#form1 input').length === 2);
+    assert($('#form1 [name=_csrf]').attr('name') === '_csrf');
+    assert($('#form1 [name=_csrf]').val().length > 1);
+    assert($('#form2 input').length === 1);
+    assert($('#form2 input').attr('data-a') === 'a');
+    assert($('#form2 input').val().length > 1);
   });
 
   it('should inject nonce attribute to script tag', function* () {
@@ -86,8 +86,8 @@ describe('test/view/security.test.js', () => {
 
     const $ = cheerio.load(result.text);
     const expectedNonce = $('#input1').val();
-    expect($('#script1').attr('nonce')).to.equal(expectedNonce);
-    expect($('#script2').attr('nonce')).to.equal(expectedNonce);
-    expect($('#script3').attr('nonce')).to.equal(expectedNonce);
+    assert($('#script1').attr('nonce') === expectedNonce);
+    assert($('#script2').attr('nonce') === expectedNonce);
+    assert($('#script3').attr('nonce') === expectedNonce);
   });
 });

@@ -41,4 +41,12 @@ module.exports = app => {
   app.get('/nonce', function *() {
     yield this.render('nonce.tpl');
   });
+
+  app.get('/escape', function* () {
+    yield this.render('escape.tpl', {
+      foo: '<html>',
+      arr: [ '<p>arr</p>' ],
+      obj: { toString: function () { return '<p>obj</p>' } },
+    });
+  });
 };

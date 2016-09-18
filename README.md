@@ -57,7 +57,9 @@ exports.view = {
 
 ### Filter
 
-Add your filters to `app/extend/filter.js`, then it will auto inject to nunjucks
+- `escape` filter is replaced by `helper.escape` which is provided by `egg-security` for better performance
+- Add your filters to `app/extend/filter.js`, then they will be injected automatically to nunjucks
+
 ```javascript
 // {app_root}/app/extend/filter.js
 exports.hello = name => `hi, ${name}`;
@@ -75,7 +77,7 @@ see [egg-security](https://github.com/eggjs/egg-security)
 - auto inject `_csrf` attr to form field
 - auto inject `nonce` attr to script tag
 
-### Helper / locals
+### Helper / Locals
 
 - you can use `helper/ctx/request` in template, such as `{{ helper.shtml('<div></div>') }}`
 - nunjucks build-in filters is injected to helper, such as `{{ helper.upper('test') }}`
@@ -86,7 +88,6 @@ see [egg-security](https://github.com/eggjs/egg-security)
 - `app.viewEngine` - nunjucks environment
 - `app.viewEngine.nunjucks` - nunjucks
 - `app.viewEngine.cleanCache(fullPath/tplName)` to easy clean cache, can use with custom [egg-watcher](https://github.com/eggjs/egg-watcher)
-
 
 ## Questions & Suggestions
 

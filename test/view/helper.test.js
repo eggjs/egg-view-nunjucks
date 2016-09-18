@@ -3,6 +3,8 @@
 const request = require('supertest');
 const expect = require('chai').expect;
 const mm = require('egg-mock');
+const stripIndent = require('common-tags').stripIndent;
+
 
 describe('test/view/helper.test.js', () => {
   let app;
@@ -24,13 +26,28 @@ describe('test/view/helper.test.js', () => {
     yield request(app.callback())
       .get('/helper')
       .expect(200)
-      .expect(
-        'value: bar\n' +
-        'value: undefined\n' +
-        'value: bar\n' +
-        'value: bar\n' +
-        '/nunjucks_filters\n'
-      );
+      .expect(stripIndent`
+        value: bar
+        value: undefined
+        value: bar
+        value: bar
+        /nunjucks_filters
+      `);
+  });
+
+  it('should use override escape', function* () {
+    yield request(app.callback())
+      .get('/escape')
+      .expect(200)
+      .expect(stripIndent`
+        <safe>
+        &lt;escape2&gt;
+        <helper-safe>
+        &lt;helper&gt;
+        &lt;helper-escape&gt;
+        &lt;helper-escape&gt;
+        &lt;helper2&gt;
+      `);
   });
 
   it('should only export to view helper', function* () {
@@ -49,21 +66,21 @@ describe('test/view/helper.test.js', () => {
 
     it('should work .safe', function() {
       const html = '<div>foo</div>';
-      expect(helper.safe(html).val).to.eql(html);
+      expect(helper.safe(html).toString()).to.eql(html);
     });
 
     it('should work .escape', function() {
-      expect(helper.escape('<div>foo</div>')).to.eql('&lt;div&gt;foo&lt;/div&gt;');
+      expect(helper.escape('<div>foo</div>').toString()).to.eql('&lt;div&gt;foo&lt;/div&gt;');
     });
 
     it('should work safe & escape', function() {
       const out = helper.safe('<div>' + helper.escape('<span>') + '</div>');
-      expect(out.val).to.eql('<div>&lt;span&gt;</div>');
+      expect(out.toString()).to.eql('<div>&lt;span&gt;</div>');
     });
 
     it('should work .csrfTag', function() {
       mm(ctx, 'csrf', 'foobar');
-      expect(helper.csrfTag().val).to.eql('<input type="hidden" name="_csrf" value="foobar" />');
+      expect(helper.csrfTag().toString()).to.eql('<input type="hidden" name="_csrf" value="foobar" />');
     });
   });
 });

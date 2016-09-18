@@ -3,11 +3,10 @@
 const request = require('supertest');
 const fs = require('fs');
 const path = require('path');
-const expect = require('chai').expect;
 const mm = require('egg-mock');
+const assert = require('power-assert');
 
 describe('test/view/cache.test.js', () => {
-
   before(function() {
     this.timeout(5000);
   });
@@ -61,7 +60,7 @@ describe('test/view/cache.test.js', () => {
       fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
 
       const count = app.viewEngine.cleanCache();
-      expect(count).to.eql(2);
+      assert(count === 2);
 
       yield request(app.callback())
         .get('/')
@@ -77,7 +76,7 @@ describe('test/view/cache.test.js', () => {
 
       const count = app.viewEngine.cleanCache('home.tpl');
 
-      expect(count).to.eql(1);
+      assert(count === 1);
 
       yield request(app.callback())
         .get('/')
@@ -93,7 +92,7 @@ describe('test/view/cache.test.js', () => {
 
       const count = app.viewEngine.cleanCache(templateFilePath);
 
-      expect(count).to.eql(1);
+      assert(count === 1);
 
       yield request(app.callback())
         .get('/')

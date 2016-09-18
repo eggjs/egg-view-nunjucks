@@ -1,8 +1,8 @@
 'use strict';
 
 const request = require('supertest');
-const expect = require('chai').expect;
 const mm = require('egg-mock');
+const assert = require('power-assert');
 
 describe('test/view/view.test.js', () => {
   let app;
@@ -73,7 +73,7 @@ describe('test/view/view.test.js', () => {
       const app = mm.app({
         baseDir: 'view-disabled',
       });
-      expect(app.viewEngine).to.be.undefined;
+      assert(!app.viewEngine);
       yield request(app.callback())
         .get('/')
         .expect(/AssertionError/)

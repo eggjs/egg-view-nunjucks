@@ -1,4 +1,9 @@
 
+0.5.0 / 2016-09-18
+==================
+
+  * feat: use egg-security escape to override nunjucks buildin (#5)
+
 0.4.0 / 2016-09-13
 ==================
 

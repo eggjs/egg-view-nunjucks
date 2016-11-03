@@ -1,4 +1,10 @@
 
+0.6.0 / 2016-11-03
+==================
+
+  * chore: update deps and test on node v7 (#7)
+  * test: change chai.js to power-assert (#6)
+
 0.5.0 / 2016-09-18
 ==================
 

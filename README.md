@@ -30,7 +30,7 @@ $ npm i egg-view-nunjucks --save
 
 ## Usage
 
-```javascript
+```js
 // {app_root}/config/plugin.js
 exports.view = {
   package: 'egg-view-nunjucks',
@@ -45,7 +45,7 @@ exports.list = function* () {
 ```
 
 ## Configuration
-```javascript
+```js
 // {app_root}/config/config.default.js
 exports.view = {
   dir: 'path/to/template/dir',  // default to `{app_root}/app/view`, support multiple path by using comma
@@ -60,7 +60,7 @@ exports.view = {
 - `escape` filter is replaced by `helper.escape` which is provided by `egg-security` for better performance
 - Add your filters to `app/extend/filter.js`, then they will be injected automatically to nunjucks
 
-```javascript
+```js
 // {app_root}/app/extend/filter.js
 exports.hello = name => `hi, ${name}`;
 

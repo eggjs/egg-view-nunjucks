@@ -4,7 +4,7 @@ const request = require('supertest');
 const fs = require('fs');
 const path = require('path');
 const mm = require('egg-mock');
-const assert = require('power-assert');
+const assert = require('assert');
 
 describe('test/view/cache.test.js', () => {
   before(function() {

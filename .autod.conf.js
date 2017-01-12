@@ -3,19 +3,21 @@
 module.exports = {
   write: true,
   prefix: '^',
-   test: [
-     'test',
-     'benchmark',
-   ],
+  test: [
+    'test',
+    'benchmark',
+  ],
+  dep: [
+    'nunjucks',
+  ],
   devdep: [
+    'egg',
     'egg-ci',
     'egg-bin',
     'autod',
     'eslint',
     'eslint-config-egg',
     'supertest',
-    'power-assert',
-    'intelli-espower-loader',
   ],
   exclude: [
     './test/fixtures',

@@ -3,7 +3,7 @@
 const request = require('supertest');
 const mm = require('egg-mock');
 const stripIndent = require('common-tags').stripIndent;
-const assert = require('power-assert');
+const assert = require('assert');
 const path = require('path');
 
 describe('test/view/helper.test.js', () => {

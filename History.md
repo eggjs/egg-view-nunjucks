@@ -1,4 +1,9 @@
 
+1.0.0 / 2017-01-16
+==================
+
+  * publish 1.0.0
+
 0.7.0 / 2017-01-13
 ==================
 
@@ -42,5 +47,5 @@
       - dep on latest nunjucks version
       - loadpath -> dir
       - not listen watcher event
-    
+
 

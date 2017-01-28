@@ -4,7 +4,6 @@ const request = require('supertest');
 const mm = require('egg-mock');
 const stripIndent = require('common-tags').stripIndent;
 const assert = require('assert');
-const path = require('path');
 
 describe('test/view/helper.test.js', () => {
   let app;
@@ -14,7 +13,6 @@ describe('test/view/helper.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'view-helper',
-      customEgg: path.join(__dirname, '../../node_modules/egg'),
     });
     yield app.ready();
     ctx = app.mockContext();

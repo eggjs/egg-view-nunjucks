@@ -1,5 +1,5 @@
 'use strict';
 
-exports.view = {
+exports.nunjucks = {
   cache: false,
 };

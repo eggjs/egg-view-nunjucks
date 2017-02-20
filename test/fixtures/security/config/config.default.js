@@ -7,3 +7,7 @@ exports.security = {
 };
 
 exports.keys = '123456';
+
+exports.view = {
+  defaultViewEngine: 'nunjucks',
+};

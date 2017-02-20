@@ -2,17 +2,10 @@
 
 const VIEW_ENGINE = Symbol('app#ViewEngine');
 const VIEW_HELPER = Symbol('app#ViewHelper');
-const View = require('../../lib/view');
 const helper = require('../../lib/helper');
 const engine = require('../../lib/engine');
 
 module.exports = {
-  // mount `View` class to app
-  // egg will create an instance to `ctx.view` at every request
-  // you can use `this.render` at controller
-  get [Symbol.for('egg#view')]() {
-    return View;
-  },
 
   /**
    * nunjucks environment

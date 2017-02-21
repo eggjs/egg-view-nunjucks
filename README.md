@@ -32,24 +32,31 @@ $ npm i egg-view-nunjucks --save
 
 ```js
 // {app_root}/config/plugin.js
-exports.view = {
+exports.nunjucks = {
+  enable: true,
   package: 'egg-view-nunjucks',
 };
+```
 
+Set mapping
+
+```js
+exports.view = {
+  defaultViewEngine: 'nunjucks',
+  mapping: {
+    '.nj': 'nunjucks',
+  },
+};
+```
+
+Render in controller
+
+```js
 // {app_root}/app/controller/test.js
 exports.list = function* () {
   // this.body = yield this.renderString('{{ name }}', { name: 'local' });
   // not need to assign this.render to this.body
-  yield this.render('test.tpl', { name: 'view test' });
-};
-```
-
-## Configuration
-```js
-// {app_root}/config/config.default.js
-exports.view = {
-  dir: 'path/to/template/dir',  // default to `{app_root}/app/view`, support multiple path by using comma
-  cache: true,                  // local env is false
+  yield this.render('test.nj', { name: 'view test' });
 };
 ```
 
@@ -88,6 +95,10 @@ see [egg-security](https://github.com/eggjs/egg-security)
 - `app.nunjucks` - nunjucks environment
 - `app.nunjucks.nunjucks` - nunjucks
 - `app.nunjucks.cleanCache(fullPath/tplName)` to easy clean cache, can use with custom [egg-watcher](https://github.com/eggjs/egg-watcher)
+
+## Configuration
+
+see [config/config.default.js](config/config.default.js) for more detail.
 
 ## Questions & Suggestions
 

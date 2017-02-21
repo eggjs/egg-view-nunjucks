@@ -1,6 +1,6 @@
 'use strict';
 
-const VIEW_ENGINE = Symbol('app#ViewEngine');
+const NUNJUCKS = Symbol('app#nunjucks');
 const engine = require('../../lib/engine');
 
 module.exports = {
@@ -11,10 +11,10 @@ module.exports = {
    * @see https://mozilla.github.io/nunjucks/api.html#environment
    */
   get nunjucks() {
-    if (!this[VIEW_ENGINE]) {
-      this[VIEW_ENGINE] = engine(this);
+    if (!this[NUNJUCKS]) {
+      this[NUNJUCKS] = engine(this);
     }
-    return this[VIEW_ENGINE];
+    return this[NUNJUCKS];
   },
 
 };

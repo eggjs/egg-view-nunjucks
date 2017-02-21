@@ -15,7 +15,7 @@ describe('test/view/view.test.js', () => {
     });
     yield app.ready();
   });
-
+  after(() => app.close());
   afterEach(mm.restore);
 
   it('should render string', function* () {
@@ -36,7 +36,7 @@ describe('test/view/view.test.js', () => {
     yield request(app.callback())
       .get('/not_found')
       .expect(500)
-      .expect(/template not found/);
+      .expect(/Can\'t find not_found.tpl from /);
   });
 
   it('should render error', function* () {
@@ -71,28 +71,33 @@ describe('test/view/view.test.js', () => {
   });
 
   describe('view disable', () => {
-    it('should disable view, cms, locals', function* () {
-      const app = mm.app({
+    let app;
+    before(() => {
+      app = mm.app({
         baseDir: 'view-disabled',
         customEgg: path.join(__dirname, '../fixtures/framework'),
       });
-      yield app.ready();
+      return app.ready();
+    });
+    after(() => app.close());
+
+    it('should disable view', function* () {
       assert(!app.viewEngine);
-      yield request(app.callback())
-        .get('/')
-        .expect(/AssertionError/)
-        .expect(/should enable view plugin/)
-        .expect(500);
     });
   });
 
   describe('multi-dir', () => {
-    it('should support multi-dir config', function* () {
-      const app = mm.app({
+    let app;
+    before(() => {
+      app = mm.app({
         baseDir: 'multi-dir',
         customEgg: path.join(__dirname, '../fixtures/framework'),
       });
-      yield app.ready();
+      return app.ready();
+    });
+    after(() => app.close());
+
+    it('should support multi-dir config', function* () {
       yield request(app.callback()).get('/view').expect(200, 'hi, egg');
       yield request(app.callback()).get('/ext').expect(200, 'hi, ext egg');
     });

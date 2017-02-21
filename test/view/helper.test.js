@@ -4,12 +4,9 @@ const path = require('path');
 const request = require('supertest');
 const mm = require('egg-mock');
 const stripIndent = require('common-tags').stripIndent;
-const assert = require('assert');
 
 describe('test/view/helper.test.js', () => {
   let app;
-  let ctx;
-  let helper;
 
   before(function* () {
     app = mm.app({
@@ -17,23 +14,21 @@ describe('test/view/helper.test.js', () => {
       customEgg: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
-    ctx = app.mockContext();
-    helper = ctx.view.helper;
   });
-
+  after(() => app.close());
   afterEach(mm.restore);
 
   it('should use view helper', function* () {
     yield request(app.callback())
       .get('/helper')
       .expect(200)
-      .expect(stripIndent`
+      .expect(new RegExp(stripIndent`
         value: bar
         value: undefined
         value: bar
         value: bar
         /nunjucks_filters
-      `);
+      `));
   });
 
   it('should use override escape', function* () {
@@ -51,12 +46,6 @@ describe('test/view/helper.test.js', () => {
       `);
   });
 
-  it('should only export to view helper', function* () {
-    assert(!app.Helper.prototype.csrfTag);
-    assert(typeof helper.csrfTag === 'function');
-    assert(typeof helper.safe === 'function');
-  });
-
   describe('fill nunjucks filter to helper', function() {
     it('should merge nunjucks filter to view helper', function* () {
       yield request(app.callback())
@@ -65,23 +54,38 @@ describe('test/view/helper.test.js', () => {
         .expect(/EGG/);
     });
 
-    it('should work .safe', function() {
-      const html = '<div>foo</div>';
-      assert(helper.safe(html).toString() === html);
+    it('should work .safe', function* () {
+      yield request(app.callback())
+        .get('/helper')
+        .expect(200)
+        .expect(/safe: <div>foo<\/div>\n/);
+      // const html = '<div>foo</div>';
+      // assert(helper.safe(html).toString() === html);
     });
 
-    it('should work .escape', function() {
-      assert(helper.escape('<div>foo</div>').toString() === '&lt;div&gt;foo&lt;/div&gt;');
+    it('should work .escape', function* () {
+      yield request(app.callback())
+        .get('/helper')
+        .expect(200)
+        .expect(/escape: &lt;div&gt;foo&lt;\/div&gt;\n/);
+      // assert(helper.escape('<div>foo</div>').toString() === '&lt;div&gt;foo&lt;/div&gt;');
     });
 
-    it('should work safe & escape', function() {
-      const out = helper.safe('<div>' + helper.escape('<span>') + '</div>');
-      assert(out.toString() === '<div>&lt;span&gt;</div>');
+    it('should work safe & escape', function* () {
+      yield request(app.callback())
+        .get('/helper')
+        .expect(200)
+        .expect(/safe-escape: <div>&lt;span&gt;<\/div>\n/);
+      // const out = helper.safe('<div>' + helper.escape('<span>') + '</div>');
+      // assert(out.toString() === '<div>&lt;span&gt;</div>');
     });
 
-    it('should work .csrfTag', function() {
-      mm(ctx, 'csrf', 'foobar');
-      assert(helper.csrfTag().toString() === '<input type="hidden" name="_csrf" value="foobar" />');
+    it('should work .csrfTag', function* () {
+      yield request(app.callback())
+        .get('/helper')
+        .expect(200)
+        .expect(/csrfTag: <input type="hidden" name="_csrf" value=".*?" \/>\n/);
+      // assert(helper.csrfTag().toString() === '<input type="hidden" name="_csrf" value="foobar" />');
     });
   });
 });

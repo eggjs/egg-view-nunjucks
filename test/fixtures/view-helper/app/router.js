@@ -12,4 +12,5 @@ module.exports = app => {
   app.get('filters', '/nunjucks_filters', function *() {
     this.body = yield this.renderString('{{ helper.upper(user) }}', { user: 'egg' });
   });
+
 };

@@ -14,7 +14,7 @@ describe('test/view/custom.test.js', () => {
     });
     yield app.ready();
   });
-
+  after(() => app.close());
   afterEach(mm.restore);
 
   it('should render markdown with custom tag', function* () {

@@ -17,7 +17,7 @@ describe('test/view/security.test.js', () => {
     });
     yield app.ready();
   });
-
+  after(() => app.close());
   afterEach(mm.restore);
 
   it('should escape', function* () {

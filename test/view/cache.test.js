@@ -32,6 +32,7 @@ describe('test/view/cache.test.js', () => {
       templateContent = fs.readFileSync(templateFilePath, { encoding: 'utf-8' });
     });
 
+    afterEach(() => app.close());
     afterEach(() => {
       fs.writeFileSync(templateFilePath, templateContent);
       app.viewEngine.cleanCache();
@@ -75,7 +76,7 @@ describe('test/view/cache.test.js', () => {
 
       fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
 
-      const count = app.viewEngine.cleanCache('home.tpl');
+      const count = app.viewEngine.cleanCache(templateFilePath);
 
       assert(count === 1);
 
@@ -119,6 +120,7 @@ describe('test/view/cache.test.js', () => {
       templateContent = fs.readFileSync(templateFilePath, { encoding: 'utf-8' });
     });
 
+    afterEach(() => app.close());
     afterEach(() => {
       if (templateContent) {
         fs.writeFileSync(templateFilePath, templateContent);

@@ -93,7 +93,6 @@ see [egg-security](https://github.com/eggjs/egg-security)
 ### More
 
 - `app.nunjucks` - nunjucks environment
-- `app.nunjucks.nunjucks` - nunjucks
 - `app.nunjucks.cleanCache(fullPath/tplName)` to easy clean cache, can use with custom [egg-watcher](https://github.com/eggjs/egg-watcher)
 
 ## Configuration

@@ -20,7 +20,6 @@ describe('test/view/view.test.js', () => {
 
   it('should enable', () => {
     assert(app.nunjucks);
-    assert(app.nunjucks.nunjucks);
     assert(app.nunjucks.app);
   });
 
@@ -107,5 +106,30 @@ describe('test/view/view.test.js', () => {
       yield request(app.callback()).get('/view').expect(200, 'hi, egg');
       yield request(app.callback()).get('/ext').expect(200, 'hi, ext egg');
     });
+
+    it('should include', function* () {
+      yield request(app.callback()).get('/include').expect(200, 'include hi, ext egg\n');
+    });
+
+    it('should include relative', function* () {
+      yield request(app.callback()).get('/relative').expect(200, 'hello egg\n');
+    });
+
+    it('should import', function* () {
+      yield request(app.callback()).get('/import').expect(200, '<div>\n  <label>egg</label>\n</div>\n');
+    });
+  });
+
+  describe('template', () => {
+    let app;
+    before(() => {
+      app = mm.app({
+        baseDir: 'template',
+        customEgg: path.join(__dirname, '../fixtures/framework'),
+      });
+      return app.ready();
+    });
+    after(() => app.close());
+
   });
 });

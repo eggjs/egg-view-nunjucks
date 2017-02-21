@@ -35,7 +35,7 @@ describe('test/view/cache.test.js', () => {
     afterEach(() => app.close());
     afterEach(() => {
       fs.writeFileSync(templateFilePath, templateContent);
-      app.viewEngine.cleanCache();
+      app.nunjucks.cleanCache();
     });
 
     it('use cache', function* () {
@@ -61,7 +61,7 @@ describe('test/view/cache.test.js', () => {
 
       fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
 
-      const count = app.viewEngine.cleanCache();
+      const count = app.nunjucks.cleanCache();
       assert(count === 2);
 
       yield request(app.callback())
@@ -76,7 +76,7 @@ describe('test/view/cache.test.js', () => {
 
       fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
 
-      const count = app.viewEngine.cleanCache(templateFilePath);
+      const count = app.nunjucks.cleanCache(templateFilePath);
 
       assert(count === 1);
 
@@ -92,7 +92,7 @@ describe('test/view/cache.test.js', () => {
 
       fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
 
-      const count = app.viewEngine.cleanCache(templateFilePath);
+      const count = app.nunjucks.cleanCache(templateFilePath);
 
       assert(count === 1);
 

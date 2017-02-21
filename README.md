@@ -85,9 +85,9 @@ see [egg-security](https://github.com/eggjs/egg-security)
 
 ### More
 
-- `app.viewEngine` - nunjucks environment
-- `app.viewEngine.nunjucks` - nunjucks
-- `app.viewEngine.cleanCache(fullPath/tplName)` to easy clean cache, can use with custom [egg-watcher](https://github.com/eggjs/egg-watcher)
+- `app.nunjucks` - nunjucks environment
+- `app.nunjucks.nunjucks` - nunjucks
+- `app.nunjucks.cleanCache(fullPath/tplName)` to easy clean cache, can use with custom [egg-watcher](https://github.com/eggjs/egg-watcher)
 
 ## Questions & Suggestions
 

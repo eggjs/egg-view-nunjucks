@@ -23,6 +23,7 @@ describe('test/view/cache.test.js', () => {
 
       app = mm.app({
         baseDir: 'cache/prod',
+        customEgg: path.join(__dirname, '../fixtures/framework'),
       });
 
       yield app.ready();
@@ -110,6 +111,7 @@ describe('test/view/cache.test.js', () => {
 
       app = mm.app({
         baseDir: 'cache/local',
+        customEgg: path.join(__dirname, '../fixtures/framework'),
       });
       yield app.ready();
 

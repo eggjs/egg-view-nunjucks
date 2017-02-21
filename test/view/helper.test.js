@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const request = require('supertest');
 const mm = require('egg-mock');
 const stripIndent = require('common-tags').stripIndent;
@@ -13,6 +14,7 @@ describe('test/view/helper.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'view-helper',
+      customEgg: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
     ctx = app.mockContext();

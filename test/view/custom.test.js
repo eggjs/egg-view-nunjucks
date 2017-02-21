@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const request = require('supertest');
 const mm = require('egg-mock');
 
@@ -9,6 +10,7 @@ describe('test/view/custom.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'custom-tag',
+      customEgg: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });

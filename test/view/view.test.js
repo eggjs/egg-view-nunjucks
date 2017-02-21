@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const request = require('supertest');
 const mm = require('egg-mock');
 const assert = require('assert');
@@ -10,6 +11,7 @@ describe('test/view/view.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'example',
+      customEgg: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });
@@ -72,6 +74,7 @@ describe('test/view/view.test.js', () => {
     it('should disable view, cms, locals', function* () {
       const app = mm.app({
         baseDir: 'view-disabled',
+        customEgg: path.join(__dirname, '../fixtures/framework'),
       });
       yield app.ready();
       assert(!app.viewEngine);
@@ -87,6 +90,7 @@ describe('test/view/view.test.js', () => {
     it('should support multi-dir config', function* () {
       const app = mm.app({
         baseDir: 'multi-dir',
+        customEgg: path.join(__dirname, '../fixtures/framework'),
       });
       yield app.ready();
       yield request(app.callback()).get('/view').expect(200, 'hi, egg');

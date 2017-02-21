@@ -18,6 +18,12 @@ describe('test/view/view.test.js', () => {
   after(() => app.close());
   afterEach(mm.restore);
 
+  it('should enable', () => {
+    assert(app.nunjucks);
+    assert(app.nunjucks.nunjucks);
+    assert(app.nunjucks.app);
+  });
+
   it('should render string', function* () {
     yield request(app.callback())
       .get('/string')
@@ -82,7 +88,7 @@ describe('test/view/view.test.js', () => {
     after(() => app.close());
 
     it('should disable view', function* () {
-      assert(!app.viewEngine);
+      assert(!app.nunjucks);
     });
   });
 

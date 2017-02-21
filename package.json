@@ -28,7 +28,7 @@
     "egg-ci": "^1.1.0",
     "egg-mock": "^3.0.0",
     "egg-view": "^1.0.0",
-    "eslint": "^3.15.0",
+    "eslint": "^3.16.0",
     "eslint-config-egg": "^3.2.0",
     "marked": "^0.3.6",
     "nunjucks-markdown": "^2.0.1",
@@ -37,6 +37,12 @@
   "engines": {
     "node": ">=6.0.0"
   },
+  "files": [
+    "app",
+    "config",
+    "lib",
+    "app.js"
+  ],
   "scripts": {
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

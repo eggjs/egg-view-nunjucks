@@ -7,7 +7,7 @@ module.exports = {
 
   /**
    * nunjucks environment
-   * @member {Object} Application#nunjucks
+   * @member {NunjucksEnvironment} Application#nunjucks
    * @see https://mozilla.github.io/nunjucks/api.html#environment
    */
   get nunjucks() {

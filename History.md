@@ -1,4 +1,11 @@
 
+2.0.0 / 2017-02-22
+==================
+
+  * feat: [BREAKING_CHANGE] depend on egg-view (#11)
+  * test: add custom tag showcase (#10)
+  * feat: fix ci and adjust with new egg-bin test (#9)
+
 1.0.0 / 2017-01-16
 ==================
 

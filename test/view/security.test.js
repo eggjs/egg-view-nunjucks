@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const request = require('supertest');
 const mm = require('egg-mock');
 const cheerio = require('cheerio');
@@ -12,10 +13,11 @@ describe('test/view/security.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'security',
+      customEgg: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });
-
+  after(() => app.close());
   afterEach(mm.restore);
 
   it('should escape', function* () {

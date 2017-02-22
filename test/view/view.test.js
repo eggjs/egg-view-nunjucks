@@ -1,5 +1,6 @@
 'use strict';
 
+const path = require('path');
 const request = require('supertest');
 const mm = require('egg-mock');
 const assert = require('assert');
@@ -10,11 +11,17 @@ describe('test/view/view.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'example',
+      customEgg: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });
-
+  after(() => app.close());
   afterEach(mm.restore);
+
+  it('should enable', () => {
+    assert(app.nunjucks);
+    assert(app.nunjucks.app);
+  });
 
   it('should render string', function* () {
     yield request(app.callback())
@@ -34,7 +41,7 @@ describe('test/view/view.test.js', () => {
     yield request(app.callback())
       .get('/not_found')
       .expect(500)
-      .expect(/template not found/);
+      .expect(/Can\'t find not_found.tpl from /);
   });
 
   it('should render error', function* () {
@@ -69,28 +76,60 @@ describe('test/view/view.test.js', () => {
   });
 
   describe('view disable', () => {
-    it('should disable view, cms, locals', function* () {
-      const app = mm.app({
+    let app;
+    before(() => {
+      app = mm.app({
         baseDir: 'view-disabled',
+        customEgg: path.join(__dirname, '../fixtures/framework'),
       });
-      yield app.ready();
-      assert(!app.viewEngine);
-      yield request(app.callback())
-        .get('/')
-        .expect(/AssertionError/)
-        .expect(/should enable view plugin/)
-        .expect(500);
+      return app.ready();
+    });
+    after(() => app.close());
+
+    it('should disable view', function* () {
+      assert(!app.nunjucks);
     });
   });
 
   describe('multi-dir', () => {
-    it('should support multi-dir config', function* () {
-      const app = mm.app({
+    let app;
+    before(() => {
+      app = mm.app({
         baseDir: 'multi-dir',
+        customEgg: path.join(__dirname, '../fixtures/framework'),
       });
-      yield app.ready();
+      return app.ready();
+    });
+    after(() => app.close());
+
+    it('should support multi-dir config', function* () {
       yield request(app.callback()).get('/view').expect(200, 'hi, egg');
       yield request(app.callback()).get('/ext').expect(200, 'hi, ext egg');
     });
+
+    it('should include', function* () {
+      yield request(app.callback()).get('/include').expect(200, 'include hi, ext egg\n');
+    });
+
+    it('should include relative', function* () {
+      yield request(app.callback()).get('/relative').expect(200, 'hello egg\n');
+    });
+
+    it('should import', function* () {
+      yield request(app.callback()).get('/import').expect(200, '<div>\n  <label>egg</label>\n</div>\n');
+    });
+  });
+
+  describe('template', () => {
+    let app;
+    before(() => {
+      app = mm.app({
+        baseDir: 'template',
+        customEgg: path.join(__dirname, '../fixtures/framework'),
+      });
+      return app.ready();
+    });
+    after(() => app.close());
+
   });
 });

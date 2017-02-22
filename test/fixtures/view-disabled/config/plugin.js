@@ -1,3 +1,3 @@
 'use strict';
 
-exports.view = false;
+exports.nunjucks = false;

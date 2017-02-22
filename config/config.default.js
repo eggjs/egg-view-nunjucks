@@ -1,20 +1,22 @@
 'use strict';
 
-const path = require('path');
-
-module.exports = appInfo => {
-  const config = {};
+module.exports = {
 
   /**
-   * View options
-   * @member Config#view
-   * @property {String} dir - full path of template dir, support multiple path by using comma, defaults to `{app_root}/app/view`.
-   * @property {Boolean} cache - whether cache template, default to `true` except `false` at local env.
+   * nunjucks config
+   * @member Config#nunjucks
+   * @property {Boolean} [autoescape=true] - controls if output with dangerous characters are escaped automatically.
+   * @property {Boolean} [throwOnUndefined=false] - throw errors when outputting a null/undefined value
+   * @property {Boolean} [trimBlocks=false] - automatically remove trailing newlines from a block/tag
+   * @property {Boolean} [lstripBlocks=false] - automatically remove leading whitespace from a block/tag
+   * @property {Boolean} [cache=true] - use a cache and recompile templates each time. false in local env.
    */
-  config.view = {
-    dir: path.join(appInfo.baseDir, 'app/view'),
+  nunjucks: {
+    autoescape: true,
+    throwOnUndefined: false,
+    trimBlocks: false,
+    lstripBlocks: false,
     cache: true,
-  };
+  },
 
-  return config;
 };

@@ -20,7 +20,7 @@
 [download-image]: https://img.shields.io/npm/dm/egg-view-nunjucks.svg?style=flat-square
 [download-url]: https://npmjs.org/package/egg-view-nunjucks
 
-egg view plugin for [nunjucks](http://mozilla.github.io/nunjucks/).
+[nunjucks](http://mozilla.github.io/nunjucks/) view plugin for egg.
 
 ## Install
 

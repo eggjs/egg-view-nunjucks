@@ -1,7 +1,7 @@
 {
   "name": "egg-view-nunjucks",
   "version": "1.0.0",
-  "description": "view plugin for egg",
+  "description": "nunjucks view plugin for egg",
   "eggPlugin": {
     "name": "nunjucks",
     "dep": [

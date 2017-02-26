@@ -1,3 +1,0 @@
---require thunk-mocha
---timeout 20000
---ui bdd

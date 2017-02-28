@@ -38,9 +38,10 @@ exports.nunjucks = {
 };
 ```
 
-Set mapping
+Set mapping in config
 
 ```js
+// {app_root}/config/config.default.js
 exports.view = {
   defaultViewEngine: 'nunjucks',
   mapping: {

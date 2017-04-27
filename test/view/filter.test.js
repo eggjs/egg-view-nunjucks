@@ -30,4 +30,11 @@ describe('test/view/filter.test.js', () => {
       .expect(200)
       .expect('eggegg');
   });
+
+  it('should render with node7 native async filter', function* () {
+    yield request(app.callback())
+      .get('/async-native')
+      .expect(200)
+      .expect('eggegg');
+  });
 });

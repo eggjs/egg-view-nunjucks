@@ -12,4 +12,8 @@ module.exports = app => {
   app.get('filter', '/async-native', function* () {
     yield this.render('async.tpl');
   });
+
+  app.get('filter', '/error', function* () {
+    yield this.render('error.tpl');
+  });
 };

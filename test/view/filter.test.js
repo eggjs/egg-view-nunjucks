@@ -37,4 +37,10 @@ describe('test/view/filter.test.js', () => {
       .expect(200)
       .expect('eggegg');
   });
+
+  it('should render with filter run error', function* () {
+    yield request(app.callback())
+      .get('/error')
+      .expect(500);
+  });
 });

@@ -24,3 +24,9 @@ exports.repeatAsyncNative = function (field) {
     setTimeout(() => resolve(field.repeat(2)), 1);
   }));
 };
+
+exports.repeatError = function () {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => reject('error'), 1);
+  });
+};

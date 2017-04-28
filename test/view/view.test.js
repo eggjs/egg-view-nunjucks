@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const request = require('supertest');
 const mm = require('egg-mock');
 const assert = require('assert');
 
@@ -11,7 +10,7 @@ describe('test/view/view.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'example',
-      customEgg: path.join(__dirname, '../fixtures/framework'),
+      framework: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });
@@ -24,35 +23,35 @@ describe('test/view/view.test.js', () => {
   });
 
   it('should render string', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/string')
       .expect(200)
       .expect(/hi, egg/);
   });
 
   it('should render template', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/')
       .expect(200)
       .expect(/hi, egg/);
   });
 
   it('should render template not found', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/not_found')
       .expect(500)
       .expect(/Can\'t find not_found.tpl from /);
   });
 
   it('should render error', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/error_string')
       .expect(500)
       .expect(/Template render error/i);
   });
 
   it('should inject helper/ctx/request', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/inject')
       .expect(200)
       .expect(/ctx: true/)
@@ -62,14 +61,14 @@ describe('test/view/view.test.js', () => {
   });
 
   it('should load filter.js', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/filter')
       .expect(200)
       .expect(/hi, egg/);
   });
 
   it('should extend locals', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/locals')
       .expect(200)
       .expect(/app, ctx, locals/);
@@ -80,7 +79,7 @@ describe('test/view/view.test.js', () => {
     before(() => {
       app = mm.app({
         baseDir: 'view-disabled',
-        customEgg: path.join(__dirname, '../fixtures/framework'),
+        framework: path.join(__dirname, '../fixtures/framework'),
       });
       return app.ready();
     });
@@ -96,27 +95,27 @@ describe('test/view/view.test.js', () => {
     before(() => {
       app = mm.app({
         baseDir: 'multi-dir',
-        customEgg: path.join(__dirname, '../fixtures/framework'),
+        framework: path.join(__dirname, '../fixtures/framework'),
       });
       return app.ready();
     });
     after(() => app.close());
 
     it('should support multi-dir config', function* () {
-      yield request(app.callback()).get('/view').expect(200, 'hi, egg');
-      yield request(app.callback()).get('/ext').expect(200, 'hi, ext egg');
+      yield app.httpRequest().get('/view').expect(200, 'hi, egg');
+      yield app.httpRequest().get('/ext').expect(200, 'hi, ext egg');
     });
 
     it('should include', function* () {
-      yield request(app.callback()).get('/include').expect(200, 'include hi, ext egg\n');
+      yield app.httpRequest().get('/include').expect(200, 'include hi, ext egg\n');
     });
 
     it('should include relative', function* () {
-      yield request(app.callback()).get('/relative').expect(200, 'hello egg\n');
+      yield app.httpRequest().get('/relative').expect(200, 'hello egg\n');
     });
 
     it('should import', function* () {
-      yield request(app.callback()).get('/import').expect(200, '<div>\n  <label>egg</label>\n</div>\n');
+      yield app.httpRequest().get('/import').expect(200, '<div>\n  <label>egg</label>\n</div>\n');
     });
   });
 
@@ -125,7 +124,7 @@ describe('test/view/view.test.js', () => {
     before(() => {
       app = mm.app({
         baseDir: 'template',
-        customEgg: path.join(__dirname, '../fixtures/framework'),
+        framework: path.join(__dirname, '../fixtures/framework'),
       });
       return app.ready();
     });

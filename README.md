@@ -76,7 +76,7 @@ exports.hello = name => `hi, ${name}`;
 exports.asyncFilter = function* () {
   return yield new Promise((resolve, reject) => {
     setTimeout(() => resolve('egg'), 1);
-  };
+  });
 };
 
 // {app_root}/app/controller/test.js

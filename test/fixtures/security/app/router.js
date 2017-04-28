@@ -3,7 +3,7 @@
 const stripIndent = require('common-tags').stripIndent;
 
 module.exports = app => {
-  app.get('/xss', function *() {
+  app.get('/xss', function* () {
     const tpl = stripIndent`
       {{ url }}
       {{ url | safe }}
@@ -16,7 +16,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/sjs', function *() {
+  app.get('/sjs', function* () {
     const tpl = stripIndent`
       var foo = "{{ helper.sjs(foo) }}";
     `;
@@ -25,7 +25,7 @@ module.exports = app => {
     });
   });
 
-  app.get('/shtml', function *() {
+  app.get('/shtml', function* () {
     const tpl = stripIndent`
       {{helper.shtml(foo)}}
     `;
@@ -34,11 +34,11 @@ module.exports = app => {
     });
   });
 
-  app.get('/form_csrf', function *() {
+  app.get('/form_csrf', function* () {
     yield this.render('form_csrf.tpl');
   });
 
-  app.get('/nonce', function *() {
+  app.get('/nonce', function* () {
     yield this.render('nonce.tpl');
   });
 
@@ -46,7 +46,7 @@ module.exports = app => {
     yield this.render('escape.tpl', {
       foo: '<html>',
       arr: [ '<p>arr</p>' ],
-      obj: { toString: function () { return '<p>obj</p>' } },
+      obj: { toString() { return '<p>obj</p>'; } },
     });
   });
 };

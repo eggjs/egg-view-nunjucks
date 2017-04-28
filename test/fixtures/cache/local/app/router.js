@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = app => {
-  app.get('/', function *() {
+  app.get('/', function* () {
     yield this.render('home.tpl', { user: 'egg' });
   });
 };

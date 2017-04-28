@@ -17,6 +17,7 @@
     "nunjucks"
   ],
   "dependencies": {
+    "co": "^4.6.0",
     "nunjucks": "^3.0.0"
   },
   "devDependencies": {

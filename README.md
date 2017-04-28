@@ -67,10 +67,17 @@ exports.list = function* () {
 
 - `escape` filter is replaced by `helper.escape` which is provided by `egg-security` for better performance
 - Add your filters to `app/extend/filter.js`, then they will be injected automatically to nunjucks
+- support async filter
 
 ```js
 // {app_root}/app/extend/filter.js
 exports.hello = name => `hi, ${name}`;
+
+exports.asyncFilter = function* () {
+  return yield new Promise((resolve, reject) => {
+    setTimeout(() => resolve('egg'), 1);
+  };
+};
 
 // {app_root}/app/controller/test.js
 exports.list = function* () {

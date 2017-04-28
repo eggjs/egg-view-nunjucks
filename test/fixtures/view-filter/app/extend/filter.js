@@ -18,15 +18,19 @@ exports.repeatAsync = function* (field) {
   });
 };
 
-// 为兼容node6，模拟async
+// for async test at node 6.x
 exports.repeatAsyncNative = function (field) {
   return __awaiter(new Promise((resolve, reject) => {
     setTimeout(() => resolve(field.repeat(2)), 1);
   }));
 };
 
-exports.repeatError = function () {
+exports.repeatError = () => {
   return new Promise((resolve, reject) => {
     setTimeout(() => reject('error'), 1);
   });
+};
+
+exports.fnError = () => {
+  throw new Error('some filter error');
 };

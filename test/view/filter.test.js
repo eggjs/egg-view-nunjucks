@@ -42,5 +42,16 @@ describe('test/view/filter.test.js', () => {
     yield request(app.callback())
       .get('/error')
       .expect(500);
+
+    yield request(app.callback())
+      .get('/fn-error')
+      .expect(500);
+  });
+
+  it('should inject filter to helper', function* () {
+    yield request(app.callback())
+      .get('/helper')
+      .expect(200)
+      .expect('eggegg');
   });
 });

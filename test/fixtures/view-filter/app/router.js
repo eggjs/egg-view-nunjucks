@@ -1,19 +1,27 @@
 'use strict';
 
 module.exports = app => {
-  app.get('filter', '/async', function* () {
+  app.get('/async', function* () {
     yield this.render('async.tpl');
   });
 
-  app.get('filter', '/sync', function* () {
+  app.get('/sync', function* () {
     yield this.render('sync.tpl');
   });
 
-  app.get('filter', '/async-native', function* () {
+  app.get('/async-native', function* () {
     yield this.render('async.tpl');
   });
 
-  app.get('filter', '/error', function* () {
+  app.get('/error', function* () {
     yield this.render('error.tpl');
+  });
+
+  app.get('/fn-error', function* () {
+    yield this.render('fn-error.tpl');
+  });
+
+  app.get('/helper', function* () {
+    yield this.render('helper-filter.tpl');
   });
 };

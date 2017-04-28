@@ -18,6 +18,7 @@
   ],
   "dependencies": {
     "co": "^4.6.0",
+    "is-type-of": "^1.0.0",
     "nunjucks": "^3.0.0"
   },
   "devDependencies": {

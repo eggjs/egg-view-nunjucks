@@ -52,5 +52,10 @@ describe('test/view/filter.test.js', () => {
       .get('/helper')
       .expect(200)
       .expect('eggegg');
+
+    yield app.httpRequest()
+      .get('/not-override')
+      .expect(200)
+      .expect('existsHelper\nshould not override');
   });
 });

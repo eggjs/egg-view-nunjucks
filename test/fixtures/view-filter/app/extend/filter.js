@@ -34,3 +34,7 @@ exports.repeatError = () => {
 exports.fnError = () => {
   throw new Error('some filter error');
 };
+
+exports.existsHelper = () => {
+  return 'should not override';
+};

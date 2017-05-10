@@ -24,4 +24,8 @@ module.exports = app => {
   app.get('/helper', function* () {
     yield this.render('helper-filter.tpl');
   });
+
+  app.get('/not-override', function* () {
+    yield this.render('helper-filter-not-override.tpl');
+  });
 };

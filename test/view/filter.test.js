@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const request = require('supertest');
 const mm = require('egg-mock');
 
 describe('test/view/filter.test.js', () => {
@@ -10,7 +9,7 @@ describe('test/view/filter.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'view-filter',
-      customEgg: path.join(__dirname, '../fixtures/framework'),
+      framework: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });
@@ -18,29 +17,45 @@ describe('test/view/filter.test.js', () => {
   afterEach(mm.restore);
 
   it('should render with async filter', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/async')
       .expect(200)
       .expect('eggegg');
   });
 
   it('should render with sync filter', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/sync')
       .expect(200)
       .expect('eggegg');
   });
 
   it('should render with node7 native async filter', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/async-native')
       .expect(200)
       .expect('eggegg');
   });
 
   it('should render with filter run error', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/error')
       .expect(500);
+
+    yield app.httpRequest()
+      .get('/fn-error')
+      .expect(500);
+  });
+
+  it('should inject filter to helper', function* () {
+    yield app.httpRequest()
+      .get('/helper')
+      .expect(200)
+      .expect('eggegg');
+
+    yield app.httpRequest()
+      .get('/not-override')
+      .expect(200)
+      .expect('existsHelper\nshould not override');
   });
 });

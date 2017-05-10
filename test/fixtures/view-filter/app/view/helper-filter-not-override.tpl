@@ -1,0 +1,2 @@
+{{ helper.existsHelper() }}
+{{ '' | existsHelper }}

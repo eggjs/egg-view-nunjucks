@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const request = require('supertest');
 const mm = require('egg-mock');
 
 describe('test/view/custom.test.js', () => {
@@ -10,7 +9,7 @@ describe('test/view/custom.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'custom-tag',
-      customEgg: path.join(__dirname, '../fixtures/framework'),
+      framework: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });
@@ -18,7 +17,7 @@ describe('test/view/custom.test.js', () => {
   afterEach(mm.restore);
 
   it('should render markdown with custom tag', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/markdown')
       .expect(200)
       .expect('<h2 id="hi-egg">hi egg</h2>\n');

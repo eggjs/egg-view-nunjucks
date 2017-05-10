@@ -10,5 +10,7 @@ module.exports = function(appInfo) {
     defaultViewEngine: 'nunjucks',
   };
 
+  exports.keys = '123456';
+
   return exports;
 };

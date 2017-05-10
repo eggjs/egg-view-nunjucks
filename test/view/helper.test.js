@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const request = require('supertest');
 const mm = require('egg-mock');
 const stripIndent = require('common-tags').stripIndent;
 
@@ -11,7 +10,7 @@ describe('test/view/helper.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'view-helper',
-      customEgg: path.join(__dirname, '../fixtures/framework'),
+      framework: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });
@@ -19,7 +18,7 @@ describe('test/view/helper.test.js', () => {
   afterEach(mm.restore);
 
   it('should use view helper', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/helper')
       .expect(200)
       .expect(new RegExp(stripIndent`
@@ -32,7 +31,7 @@ describe('test/view/helper.test.js', () => {
   });
 
   it('should use override escape', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/escape')
       .expect(200)
       .expect(stripIndent`
@@ -48,14 +47,14 @@ describe('test/view/helper.test.js', () => {
 
   describe('fill nunjucks filter to helper', function() {
     it('should merge nunjucks filter to view helper', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/nunjucks_filters')
         .expect(200)
         .expect(/EGG/);
     });
 
     it('should work .safe', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/helper')
         .expect(200)
         .expect(/safe: <div>foo<\/div>\n/);
@@ -64,7 +63,7 @@ describe('test/view/helper.test.js', () => {
     });
 
     it('should work .escape', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/helper')
         .expect(200)
         .expect(/escape: &lt;div&gt;foo&lt;\/div&gt;\n/);
@@ -72,7 +71,7 @@ describe('test/view/helper.test.js', () => {
     });
 
     it('should work safe & escape', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/helper')
         .expect(200)
         .expect(/safe-escape: <div>&lt;span&gt;<\/div>\n/);
@@ -81,7 +80,7 @@ describe('test/view/helper.test.js', () => {
     });
 
     it('should work .csrfTag', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/helper')
         .expect(200)
         .expect(/csrfTag: <input type="hidden" name="_csrf" value=".*?" \/>\n/);

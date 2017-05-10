@@ -1,0 +1,1 @@
+{{ helper.repeatSync('egg') }}

@@ -1,10 +1,10 @@
 'use strict';
 
 module.exports = app => {
-  app.get('/', function *() {
+  app.get('/', function* () {
     try {
       yield this.render('disabled.tpl', { user: 'egg' });
-    } catch(err) {
+    } catch (err) {
       this.status = 500;
       this.body = err;
     }

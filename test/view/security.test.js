@@ -1,7 +1,6 @@
 'use strict';
 
 const path = require('path');
-const request = require('supertest');
 const mm = require('egg-mock');
 const cheerio = require('cheerio');
 const assert = require('assert');
@@ -13,7 +12,7 @@ describe('test/view/security.test.js', () => {
   before(function* () {
     app = mm.app({
       baseDir: 'security',
-      customEgg: path.join(__dirname, '../fixtures/framework'),
+      framework: path.join(__dirname, '../fixtures/framework'),
     });
     yield app.ready();
   });
@@ -23,7 +22,7 @@ describe('test/view/security.test.js', () => {
   it('should escape', function* () {
     // - https://snyk.io/vuln/npm:nunjucks:20160906
     // - https://github.com/mozilla/nunjucks/issues/835
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/escape')
       .expect(200)
       .expect(stripIndent`
@@ -42,7 +41,7 @@ describe('test/view/security.test.js', () => {
   });
 
   it('should render xss', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/xss')
       .expect(200)
       .expect(stripIndent`
@@ -54,21 +53,21 @@ describe('test/view/security.test.js', () => {
   });
 
   it('should render sjs', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/sjs')
       .expect(200)
       .expect('var foo = "\\x22hello\\x22";');
   });
 
   it('should render shtml', function* () {
-    yield request(app.callback())
+    yield app.httpRequest()
       .get('/shtml')
       .expect(200)
       .expect('<img><h1>foo</h1>');
   });
 
   it('should inject csrf hidden field in form', function* () {
-    const result = yield request(app.callback())
+    const result = yield app.httpRequest()
       .get('/form_csrf')
       .expect(200);
 
@@ -82,7 +81,7 @@ describe('test/view/security.test.js', () => {
   });
 
   it('should inject nonce attribute to script tag', function* () {
-    const result = yield request(app.callback())
+    const result = yield app.httpRequest()
       .get('/nonce')
       .expect(200);
 

@@ -1,6 +1,5 @@
 'use strict';
 
-const request = require('supertest');
 const fs = require('fs');
 const path = require('path');
 const mm = require('egg-mock');
@@ -23,7 +22,7 @@ describe('test/view/cache.test.js', () => {
 
       app = mm.app({
         baseDir: 'cache/prod',
-        customEgg: path.join(__dirname, '../fixtures/framework'),
+        framework: path.join(__dirname, '../fixtures/framework'),
       });
 
       yield app.ready();
@@ -39,23 +38,23 @@ describe('test/view/cache.test.js', () => {
     });
 
     it('use cache', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /hi, egg/);
 
       fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
 
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /hi, egg/);
     });
 
     it('clean cache', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /hi, egg/);
 
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/sub')
         .expect(200, /hi, sub egg/);
 
@@ -64,13 +63,13 @@ describe('test/view/cache.test.js', () => {
       const count = app.nunjucks.cleanCache();
       assert(count === 2);
 
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /TEMPLATE CHANGED/);
     });
 
     it('clean cache by name', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /hi, egg/);
 
@@ -80,13 +79,13 @@ describe('test/view/cache.test.js', () => {
 
       assert(count === 1);
 
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /TEMPLATE CHANGED/);
     });
 
     it('clean cache by path', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /hi, egg/);
 
@@ -96,7 +95,7 @@ describe('test/view/cache.test.js', () => {
 
       assert(count === 1);
 
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /TEMPLATE CHANGED/);
     });
@@ -112,7 +111,7 @@ describe('test/view/cache.test.js', () => {
 
       app = mm.app({
         baseDir: 'cache/local',
-        customEgg: path.join(__dirname, '../fixtures/framework'),
+        framework: path.join(__dirname, '../fixtures/framework'),
       });
       yield app.ready();
 
@@ -128,13 +127,13 @@ describe('test/view/cache.test.js', () => {
     });
 
     it('cache = false', function* () {
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /hi, egg/);
 
       fs.writeFileSync(templateFilePath, 'TEMPLATE CHANGED');
 
-      yield request(app.callback())
+      yield app.httpRequest()
         .get('/')
         .expect(200, /TEMPLATE CHANGED/);
     });

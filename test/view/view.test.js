@@ -67,6 +67,14 @@ describe('test/view/view.test.js', () => {
       .expect(/hi, egg/);
   });
 
+  it('should load filter.js with include', function* () {
+    yield app.httpRequest()
+      .get('/filter/include')
+      .expect(200)
+      .expect(/hi, egg/)
+      .expect(/hi, yadan/);
+  });
+
   it('should extend locals', function* () {
     yield app.httpRequest()
       .get('/locals')

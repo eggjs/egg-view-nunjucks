@@ -17,6 +17,10 @@ module.exports = app => {
     this.body = yield this.renderString('{{ user | hello }}', { user: 'egg' });
   });
 
+  app.get('/filter/include', function* () {
+    yield this.render('include-test.tpl', { list: [ 'egg', 'yadan' ] });
+  });
+
   app.get('/not_found', function* () {
     try {
       yield this.render('not_found.tpl', {

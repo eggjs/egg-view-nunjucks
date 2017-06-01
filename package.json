@@ -17,21 +17,19 @@
     "nunjucks"
   ],
   "dependencies": {
-    "co": "^4.6.0",
-    "is-type-of": "^1.0.0",
-    "nunjucks": "^3.0.0"
+    "nunjucks": "^3.0.1"
   },
   "devDependencies": {
     "autod": "^2.8.0",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.0.0-rc.1",
     "common-tags": "^1.4.0",
-    "egg": "^1.2.1",
-    "egg-bin": "^3.3.2",
+    "egg": "^1.4.0",
+    "egg-bin": "^3.4.1",
     "egg-ci": "^1.6.0",
-    "egg-mock": "^3.5.0",
+    "egg-mock": "^3.7.1",
     "egg-view": "^1.0.0",
     "eslint": "^3.19.0",
-    "eslint-config-egg": "^4.1.0",
+    "eslint-config-egg": "^4.2.0",
     "marked": "^0.3.6",
     "nunjucks-markdown": "^2.0.1"
   },
@@ -53,7 +51,7 @@
     "autod": "autod"
   },
   "ci": {
-    "version": "6, 7"
+    "version": "6, 8"
   },
   "repository": {
     "type": "git",

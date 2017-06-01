@@ -5,6 +5,10 @@ module.exports = app => {
     yield this.render('async.tpl');
   });
 
+  app.get('/include', function* () {
+    yield this.render('include-test.tpl', { name: 'egg', list: [ 'a', 'b' ] });
+  });
+
   app.get('/sync', function* () {
     yield this.render('sync.tpl');
   });

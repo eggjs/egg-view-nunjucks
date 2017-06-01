@@ -16,6 +16,13 @@ describe('test/view/filter.test.js', () => {
   after(() => app.close());
   afterEach(mm.restore);
 
+  it.only('should work include of filter', function* () {
+    yield app.httpRequest()
+      .get('/include')
+      .expect(200)
+      .expect(/eggegg\n--\n\s*aa\n+\s*bb\n+/);
+  });
+
   it('should render with async filter', function* () {
     yield app.httpRequest()
       .get('/async')

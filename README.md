@@ -87,8 +87,8 @@ see [egg-security](https://github.com/eggjs/egg-security)
 
 ### Helper / Locals
 
-- you can use `helper/ctx/request` in template, such as `{{ helper.shtml('<div></div>') }}`
-- nunjucks build-in filters is injected to helper, such as `{{ helper.upper('test') }}`
+- you can use `helper/ctx/request` in template, such as `helper.shtml('<div></div>')`
+- nunjucks build-in filters is injected to helper, such as `helper.upper('test')`
 - `helper.shtml/surl/sjs/escape` is auto wrapped with `safe`
 
 ### More

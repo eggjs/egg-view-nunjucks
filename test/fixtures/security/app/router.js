@@ -49,4 +49,10 @@ module.exports = app => {
       obj: { toString() { return '<p>obj</p>'; } },
     });
   });
+
+  app.get('/sandbox', function* () {
+    const tpl = this.query.tpl;
+    const name = this.query.name;
+    this.body = yield this.renderString(`hi, ${tpl}`, { name });
+  });
 };

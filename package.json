@@ -1,6 +1,6 @@
 {
   "name": "egg-view-nunjucks",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "nunjucks view plugin for egg",
   "eggPlugin": {
     "name": "nunjucks",

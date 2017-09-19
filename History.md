@@ -1,4 +1,10 @@
 
+2.1.4 / 2017-09-19
+==================
+
+**fixes**
+  * [[`e311ae7`](http://github.com/eggjs/egg-view-nunjucks/commit/e311ae77a538f28df018447d4619b3ec66a2e859)] - fix: forbidden sandbox breakout by using constructor (#20) (TZ | 天猪 <<atian25@qq.com>>)
+
 2.1.3 / 2017-06-30
 ==================
 

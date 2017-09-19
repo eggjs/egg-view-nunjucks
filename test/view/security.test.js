@@ -91,4 +91,170 @@ describe('test/view/security.test.js', () => {
     assert($('#script2').attr('nonce') === expectedNonce);
     assert($('#script3').attr('nonce') === expectedNonce);
   });
+
+  // http://disse.cting.org/2016/08/02/2016-08-02-sandbox-break-out-nunjucks-template-engine
+  describe('sandbox-break-out-nunjucks-template-engine', () => {
+    it('allow {{7*7}}', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ tpl: '{{7*7}}' })
+        .expect(/hi, 49/)
+        .expect(200);
+    });
+
+    it('name.prototype.toString.constructor', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{name.prototype.toString.constructor("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `name\["prototype"\]\["toString"\]\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('name.prototype.toString[name]', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'constructor' })
+        .query({ tpl: '{{name.prototype.toString[name]("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `name\["prototype"\]\["toString"\]\["name"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('name.prototype.toString["constructor"]', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{name.prototype.toString["constructor"]("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `name\["prototype"\]\["toString"\]\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('name.prototype.toString[\'constructor\']', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{name.prototype.toString[\'constructor\']("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `name\["prototype"\]\["toString"\]\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('name.prototype.toString[\'cons\' + \'tructor\']', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{name.prototype.toString[\'cons\' + \'tructor\']("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `name\["prototype"\]\["toString"\]\["--expression--"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('foo{{range.constructor', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: 'foo{{range.constructor("return process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")() + name}}' })
+        .expect(/Unable to call `range\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('range.constructor', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{range.constructor("return process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `range\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('range.constructor global', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{range.constructor("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `range\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('cycler.constructor', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{cycler.constructor("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `cycler\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('joiner.constructor', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{joiner.constructor("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")()}}' })
+        .expect(/Unable to call `joiner\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    // https://github.com/epinna/tplmap/blob/master/plugins/engines/nunjucks.py#L8
+    it('global.process.mainModule.require', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')}}' })
+        .expect(/Unable to call `global\["process"\]\["mainModule"\]\["require"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('global.process.mainModule.require', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')}}' })
+        .expect(/Unable to call `global\["process"\]\["mainModule"\]\["require"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('process.mainModule.require', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')}}' })
+        .expect(/Unable to call `process\["mainModule"\]\["require"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('global.process.mainModule.require', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{global.process.mainModule.require(\'os\').platform()}}' })
+        .expect(/Unable to call `global\["process"\]\["mainModule"\]\["require"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('set value', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({
+          tpl: `
+            {% set username = joiner.constructor("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")() %}
+            {{username}}
+          `,
+        })
+        .expect(/Unable to call `joiner\["constructor"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('set value with name', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ fooname: 'constructor' })
+        .query({
+          tpl: `
+            {% set username = joiner[fooname]("return global.process.mainModule.require(\'child_process\').execSync(\'tail /etc/passwd\')")() %}
+            {{username}}
+          `,
+        })
+        .expect(/Unable to call `joiner\["fooname"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+  });
 });

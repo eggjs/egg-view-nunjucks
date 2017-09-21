@@ -147,6 +147,24 @@ describe('test/view/security.test.js', () => {
         .expect(500);
     });
 
+    it('name.__proto__', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{name.__proto__.toString()}}' })
+        .expect(/Unable to call `name\["__proto__"\]\["toString"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('name.__defineGetter__', () => {
+      return app.httpRequest()
+        .get('/sandbox')
+        .query({ name: 'bar' })
+        .query({ tpl: '{{name.__defineGetter__.toString()}}' })
+        .expect(/Unable to call `name\["__defineGetter__"\]\["toString"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
     it('foo{{range.constructor', () => {
       return app.httpRequest()
         .get('/sandbox')
@@ -255,6 +273,49 @@ describe('test/view/security.test.js', () => {
         })
         .expect(/Unable to call `joiner\["fooname"\]`, which is undefined or falsey/)
         .expect(500);
+    });
+
+    it('require', () => {
+      return app.httpRequest()
+        .get('/sandbox/require')
+        .expect(/Unable to call `require`, which is an invalid function/)
+        .expect(500);
+    });
+
+    it('require 2', () => {
+      return app.httpRequest()
+        .get('/sandbox/require2')
+        .expect(/Unable to call `foo`, which is an invalid function/)
+        .expect(500);
+    });
+
+    it('module.request', () => {
+      return app.httpRequest()
+        .get('/sandbox/module.request')
+        .expect(/Unable to call `m\["require"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('module.request 2', () => {
+      return app.httpRequest()
+        .get('/sandbox/module.request2')
+        .expect(/Unable to call `m\["f"\]\["b"\]\["require"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    it('process.mainModule.require', () => {
+      return app.httpRequest()
+        .get('/sandbox/process.mainModule.require')
+        .expect(/Unable to call `m\["f"\]\["b"\]\["require"\]`, which is undefined or falsey/)
+        .expect(500);
+    });
+
+    // hard to forbidden this one
+    it('fn module.require', () => {
+      return app.httpRequest()
+        .get('/sandbox/fn.module.require')
+        .expect(new RegExp(require('os').platform()))
+        .expect(200);
     });
   });
 });

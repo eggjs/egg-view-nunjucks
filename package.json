@@ -20,38 +20,38 @@
     "nunjucks": "^3.0.1"
   },
   "devDependencies": {
-    "autod": "^2.9.0",
+    "autod": "^3.0.1",
     "cheerio": "^1.0.0-rc.2",
     "common-tags": "^1.4.0",
-    "egg": "^1.8.0",
-    "egg-bin": "^4.3.2",
+    "egg": "next",
+    "egg-bin": "^4.3.5",
     "egg-ci": "^1.8.0",
-    "egg-mock": "^3.12.1",
+    "egg-mock": "^3.13.1",
     "egg-view": "^1.0.0",
-    "eslint": "^4.7.1",
+    "eslint": "^4.11.0",
     "eslint-config-egg": "^5.1.1",
     "marked": "^0.3.6",
     "nunjucks-markdown": "^2.0.1"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=8.0.0"
   },
   "files": [
     "app",
-    "config",
     "lib",
+    "config",
     "app.js"
   ],
   "scripts": {
-    "test": "npm run lint -- --fix && npm run test-local",
+    "test": "npm run lint -- --fix && egg-bin pkgfiles && npm run test-local",
     "test-local": "egg-bin test",
     "cov": "egg-bin cov",
     "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
+    "ci": "npm run lint && egg-bin pkgfiles --check && npm run cov",
     "autod": "autod"
   },
   "ci": {
-    "version": "6, 8"
+    "version": "8, 9"
   },
   "repository": {
     "type": "git",

@@ -23,7 +23,7 @@
     "autod": "^3.0.1",
     "cheerio": "^1.0.0-rc.2",
     "common-tags": "^1.4.0",
-    "egg": "next",
+    "egg": "^1.11.0",
     "egg-bin": "^4.3.5",
     "egg-ci": "^1.8.0",
     "egg-mock": "^3.13.1",
@@ -34,7 +34,7 @@
     "nunjucks-markdown": "^2.0.1"
   },
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=6.0.0"
   },
   "files": [
     "app",

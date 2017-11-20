@@ -54,11 +54,14 @@ Render in controller
 
 ```js
 // {app_root}/app/controller/test.js
-exports.list = function* () {
-  // this.body = yield this.renderString('{{ name }}', { name: 'local' });
-  // not need to assign this.render to this.body
-  yield this.render('test.nj', { name: 'view test' });
-};
+class TestController extends Controller {
+  async list() {
+    const ctx = this.ctx;
+    // ctx.body = await ctx.renderString('{{ name }}', { name: 'local' });
+    // not need to assign `ctx.render` to `ctx.body`
+    await ctx.render('test.nj', { name: 'view test' });
+  }
+}
 ```
 
 ## Feature
@@ -72,9 +75,27 @@ exports.list = function* () {
 // {app_root}/app/extend/filter.js
 exports.hello = name => `hi, ${name}`;
 
+// so you could use it at template
 // {app_root}/app/controller/test.js
-exports.list = function* () {
-  this.body = yield this.renderString('{{ name | hello }}', { name: 'egg' });
+class TestController extends Controller {
+  async list() {
+    const ctx = this.ctx;
+    ctx.body = await ctx.renderString('{{ name | hello }}', { name: 'egg' });
+  };
+}
+```
+
+### Tag
+
+you can extend custom tag like this:
+
+```js
+// {app_root}/app.js
+const markdown = require('nunjucks-markdown');
+const marked = require('marked');
+
+module.exports = app => {
+  markdown.register(app.nunjucks, marked);
 };
 ```
 

@@ -82,22 +82,6 @@ describe('test/view/view.test.js', () => {
       .expect(/app, ctx, locals/);
   });
 
-  describe('view disable', () => {
-    let app;
-    before(() => {
-      app = mm.app({
-        baseDir: 'view-disabled',
-        framework: path.join(__dirname, '../fixtures/framework'),
-      });
-      return app.ready();
-    });
-    after(() => app.close());
-
-    it('should disable view', function* () {
-      assert(!app.nunjucks);
-    });
-  });
-
   describe('multi-dir', () => {
     let app;
     before(() => {

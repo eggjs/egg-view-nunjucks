@@ -1,4 +1,12 @@
 
+2.1.5 / 2018-02-23
+==================
+
+  * fix: temporary hold nunjucks version to ~3.0.1 (#25)
+  * fix: ci crash when disable plugin (#24)
+  * chore: test 6.x (#23)
+  * docs: update README with async and custom tag (#22)
+
 2.1.4 / 2017-09-19
 ==================
 

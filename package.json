@@ -17,19 +17,19 @@
     "nunjucks"
   ],
   "dependencies": {
-    "nunjucks": "~3.0.1"
+    "nunjucks": "^3.1.2"
   },
   "devDependencies": {
     "autod": "^3.0.1",
     "cheerio": "^1.0.0-rc.2",
-    "common-tags": "^1.4.0",
-    "egg": "^1.11.0",
-    "egg-bin": "^4.3.5",
+    "common-tags": "^1.7.2",
+    "egg": "^1",
+    "egg-bin": "^4.3.7",
     "egg-ci": "^1.8.0",
-    "egg-mock": "^3.13.1",
+    "egg-mock": "^3.14.0",
     "egg-view": "^1.0.0",
-    "eslint": "^4.11.0",
-    "eslint-config-egg": "^5.1.1",
+    "eslint": "^4.18.1",
+    "eslint-config-egg": "^6.0.0",
     "marked": "^0.3.6",
     "nunjucks-markdown": "^2.0.1"
   },

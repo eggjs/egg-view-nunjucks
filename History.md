@@ -1,4 +1,13 @@
 
+2.3.0 / 2021-01-14
+==================
+
+**features**
+  * [[`ce30ac2`](http://github.com/eggjs/egg-view-nunjucks/commit/ce30ac2af2df119bfa24b1315fc0d2d8d0e94faa)] - feat: renderString support opts (#30) (抹桥 <<kisnows@users.noreply.github.com>>)
+
+**others**
+  * [[`6bd618b`](http://github.com/eggjs/egg-view-nunjucks/commit/6bd618bc576d19f382c6f846d9832362aa00ca0c)] - chore: update travis (#28) (TZ | 天猪 <<atian25@qq.com>>)
+
 2.2.0 / 2018-03-29
 ==================
 

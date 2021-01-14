@@ -1,5 +1,6 @@
 'use strict';
-
+const path = require('path');
+const fs = require('fs');
 module.exports = app => {
   app.get('/', function* () {
     yield this.render('home.tpl', { user: 'egg' });
@@ -7,6 +8,14 @@ module.exports = app => {
 
   app.get('/string', function* () {
     this.body = yield this.renderString('hi, {{ user }}', { user: 'egg' });
+  });
+
+  app.get('/string_options', function* () {
+    this.body = yield this.renderString(
+      fs.readFileSync(path.resolve(__dirname, './view/layout.tpl')).toString(),
+      { user: 'egg' },
+      { path: path.resolve(__dirname, './view/layout.tpl') }
+    );
   });
 
   app.get('/inject', function* () {
@@ -36,6 +45,7 @@ module.exports = app => {
     this.locals = { b: 'ctx' };
     this.body = yield this.renderString('{{ a }}, {{ b }}, {{ c }}', { c: 'locals' });
   });
+
 
   app.get('/error_string', function* () {
     try {

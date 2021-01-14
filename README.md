@@ -59,7 +59,10 @@ class TestController extends Controller {
     const ctx = this.ctx;
     // ctx.body = await ctx.renderString('{{ name }}', { name: 'local' });
     // not need to assign `ctx.render` to `ctx.body`
-    await ctx.render('test.nj', { name: 'view test' });
+    // https://github.com/mozilla/nunjucks/blob/6f3e4a36a71cfd59ddc8c1fc5dcd77b8c24d83f3/nunjucks/src/environment.js#L318
+    await ctx.render('test.nj', { name: 'view test' }, {
+      path: '***'
+    });
   }
 }
 ```
@@ -80,7 +83,9 @@ exports.hello = name => `hi, ${name}`;
 class TestController extends Controller {
   async list() {
     const ctx = this.ctx;
-    ctx.body = await ctx.renderString('{{ name | hello }}', { name: 'egg' });
+    ctx.body = await ctx.renderString('{{ name | hello }}', { name: 'egg' }, {
+      path: '***'
+    });
   };
 }
 ```

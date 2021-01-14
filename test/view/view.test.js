@@ -29,6 +29,13 @@ describe('test/view/view.test.js', () => {
       .expect(/hi, egg/);
   });
 
+  it('should render string with options path', function* () {
+    yield app.httpRequest()
+      .get('/string_options')
+      .expect(200)
+      .expect(/<div>egg<div>/);
+  });
+
   it('should render template', function* () {
     yield app.httpRequest()
       .get('/')
